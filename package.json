@@ -1,0 +1,23 @@
+{
+  "name": "bagdrop-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sushantbaskota2/bagdrop-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sushantbaskota2/bagdrop-backend/issues"
+  },
+  "homepage": "https://github.com/sushantbaskota2/bagdrop-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
+}
