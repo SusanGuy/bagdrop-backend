@@ -1,4 +1,5 @@
 const express = require('express');
+
 const userRouter = require('./routes/users.js')
 const reviewRouter = require('./routes/review.js')
 const paymentRouter = require('./routes/payment.js')
@@ -16,6 +17,9 @@ app.use(
         extended: false
     })
 );
+
+app.use(express.static('../bagdrop-frontend'));
+
 
 
 
