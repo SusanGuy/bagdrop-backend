@@ -23,9 +23,16 @@ app.use(express.static('../bagdrop-frontend'));
 
 
 
-app.listen(3000, () => {
-    console.log("Express server is running at port no : 3000")
+app.listen(5000, () => {
+    console.log("Express server is running at port no : 5000")
 })
+
+
+app.use((req, res, next) =>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 app.use("/users", userRouter);
 app.use("/reviews", reviewRouter);

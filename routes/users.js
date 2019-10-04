@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const connection = require('../connection.js');
+const bcrypt=require('bcrypt');
+const saltRound=10;
 
 
 //Get all users
@@ -30,14 +32,19 @@ router.delete('/:id', (req, res) => {
     })
 });
 
+
+
 //Insert an user
 router.post('/', (req, res) => {
-    const queryString = 'INSERT INTO users(username,first_name,last_name,email,email_confirmed,password,user_type) VALUES(?,?,?,?,?,?,?)';
-    connection.query(queryString, [req.body.username, req.body.firstname, req.body.lastname, req.body.email, req.body.confirmed_email, req.body.password, req.body.type], (error, result) => {
-        if (error) throw error;
-        res.redirect("/")
-        // res.status(201).send(`User added with ID: ${result.insertId}`);
-    });
+    const password= req.body.password;
+    const queryString = 'INSERT INTO users(username,first_name,last_name,email,email_confirmed,password) VALUES(?,?,?,?,?,?)';
+    bcrypt.hash(password,saltRound,(err,hash)=>{
+        connection.query(queryString, [req.body.username, req.body.fname, req.body.lname, req.body.email, req.body.email1, hash], (error, result) => {
+            if (error) throw error;
+             res.status(201).send(`User added with ID: ${result.insertId}`);
+        });
+    })
+ 
 });
 
 //Update an user
