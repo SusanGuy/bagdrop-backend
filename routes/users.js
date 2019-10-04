@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const connection = require('../connection.js');
-const bcrypt=require('bcrypt-nodejs');
+const bcrypt=require('bcrypt');
 const saltRound=10;
 
 
@@ -39,8 +39,8 @@ router.post('/', (req, res) => {
     const password= req.body.password;
     const queryString = 'INSERT INTO users(username,first_name,last_name,email,email_confirmed,password) VALUES(?,?,?,?,?,?)';
     bcrypt.hash(password,saltRound,(err,hash)=>{
-        connection.query(queryString, [req.body.username, req.body.fname, req.body.lname, req.body.email, req.body.email1,password ], (error, result) => {
-            if (error) throw error;
+        connection.query(queryString, [req.body.username, req.body.fname, req.body.lname, req.body.email, req.body.email1,hash], (error, result) => {
+            if (error) console.log(error);
              res.status(201).send(`User added with ID: ${result.insertId}`);
         });
     })
