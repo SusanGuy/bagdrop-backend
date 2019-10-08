@@ -1,11 +1,11 @@
 const express = require('express');
-
 const userRouter = require('./routes/users.js')
 const reviewRouter = require('./routes/review.js')
 const paymentRouter = require('./routes/payment.js')
 const invoiceRouter = require('./routes/invoice.js')
 const bagRouter = require('./routes/bag.js')
 const dropRouter = require('./routes/droppoint.js')
+const passport= require('./passport/index')
 
 var app = express();
 const bodyparser = require("body-parser");
@@ -18,7 +18,8 @@ app.use(
     })
 );
 
-app.use(express.static('../bagdrop-frontend'));
+
+app.use(passport.initialize());
 
 
 
@@ -33,6 +34,7 @@ app.use((req, res, next) =>{
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
 
 app.use("/users", userRouter);
 app.use("/reviews", reviewRouter);

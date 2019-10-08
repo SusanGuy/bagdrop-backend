@@ -1,8 +1,37 @@
 const express = require("express");
 const router = express.Router();
+const passport = require('../passport')
 const connection = require('../connection.js');
 const bcrypt=require('bcrypt');
 const saltRound=10;
+
+//signup
+router.post('/signup',(req,res,next)=>{
+    passport.authenticate('local-signup',(error,user)=>{
+        if(error){
+            return res.status(500).json({
+                message:error||'Internal Server error'
+
+            })
+        }
+        return res.json(user);
+    })(req,res,next);
+})
+
+//signin
+router.post('/signin',(req,res,next)=>{
+    passport.authenticate('local-signin',(error,user)=>{
+        if(error){
+
+            return res.status(500).json({
+                message:error||'Internal Server error'
+
+            })
+        }
+
+        return res.json(user);
+    })(req,res,next);
+})
 
 
 //Get all users
@@ -44,7 +73,7 @@ router.post('/', (req, res) => {
              res.status(201).send(`User added with ID: ${result.insertId}`);
         });
     })
- 
+
 });
 
 //Update an user
