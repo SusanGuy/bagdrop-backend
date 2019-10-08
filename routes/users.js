@@ -1,6 +1,37 @@
 const express = require("express");
 const router = express.Router();
+const passport = require('../passport')
 const connection = require('../connection.js');
+const bcrypt=require('bcrypt');
+const saltRound=10;
+
+//signup
+router.post('/signup',(req,res,next)=>{
+    passport.authenticate('local-signup',(error,user)=>{
+        if(error){
+            return res.status(500).json({
+                message:error||'Internal Server error'
+
+            })
+        }
+        return res.json(user);
+    })(req,res,next);
+})
+
+//signin
+router.post('/signin',(req,res,next)=>{
+    passport.authenticate('local-signin',(error,user)=>{
+        if(error){
+
+            return res.status(500).json({
+                message:error||'Internal Server error'
+
+            })
+        }
+
+        return res.json(user);
+    })(req,res,next);
+})
 
 
 //Get all users
@@ -30,13 +61,19 @@ router.delete('/:id', (req, res) => {
     })
 });
 
+
+
 //Insert an user
 router.post('/', (req, res) => {
-    connection.query('INSERT INTO users SET ?', req.body, (error, result) => {
-        if (error) throw error;
+    const password= req.body.password;
+    const queryString = 'INSERT INTO users(username,first_name,last_name,email,email_confirmed,password) VALUES(?,?,?,?,?,?)';
+    bcrypt.hash(password,saltRound,(err,hash)=>{
+        connection.query(queryString, [req.body.username, req.body.fname, req.body.lname, req.body.email, req.body.email1,hash], (error, result) => {
+            if (error) console.log(error);
+             res.status(201).send(`User added with ID: ${result.insertId}`);
+        });
+    })
 
-        res.status(201).send(`User added with ID: ${result.insertId}`);
-    });
 });
 
 //Update an user
