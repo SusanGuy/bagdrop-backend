@@ -24,7 +24,6 @@ const SignupStrategy= new Strategy({passReqToCallback:true},(req,username,passwo
 
 
         };
-         console.log(req.body.fname)
         let insertQuery = "INSERT INTO users (username,first_name,last_name,email,email_confirmed,password,user_type) values (?,?,?,?,?,?,?)";
         connection.query(insertQuery, [newUser.username, newUser.firstname, newUser.lastname, newUser.email, newUser.email1, newUser.password,newUser.type],
             (err, rows)=>{

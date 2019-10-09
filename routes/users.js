@@ -7,16 +7,17 @@ const saltRound=10;
 
 //google-signin
 router.get('/google',passport.authenticate('google-signin',{
-    scope:['profile']
+    scope:['profile','email']
 }))
 
 //google-signin
-router.get('/google/redirect',(req,res,next)=>{
-    res.send('aipugis muji')
+router.get('/google/redirect',passport.authenticate('google-signin'),(req,res)=>{
+    res.send('vayo muji')
 })
 
 
 //signup
+
 router.post('/signup',(req,res,next)=>{
     passport.authenticate('local-signup',(error,user)=>{
         if(error){
