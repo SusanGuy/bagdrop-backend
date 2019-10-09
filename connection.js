@@ -1,9 +1,10 @@
 const mysql = require('mysql');
+const keys= require('./config/keys')
 var connection = mysql.createConnection({
-    host: "bagdrop.chzzw5vv4mkw.us-east-2.rds.amazonaws.com",
-    user: "admin",
-    password: "BagDrop1234",
-    database: "BagDrop",
+    host: keys.MySQL.host,
+    user: keys.MySQL.user,
+    password: keys.MySQL.password,
+    database: keys.MySQL.database,
     multipleStatements: true
 })
 

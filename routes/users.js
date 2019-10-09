@@ -5,6 +5,17 @@ const connection = require('../connection.js');
 const bcrypt=require('bcrypt');
 const saltRound=10;
 
+//google-signin
+router.get('/google',passport.authenticate('google-signin',{
+    scope:['profile']
+}))
+
+//google-signin
+router.get('/google/redirect',(req,res,next)=>{
+    res.send('aipugis muji')
+})
+
+
 //signup
 router.post('/signup',(req,res,next)=>{
     passport.authenticate('local-signup',(error,user)=>{
